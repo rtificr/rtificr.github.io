@@ -1,0 +1,15 @@
+{
+  "name": "gamplo-wasm",
+  "type": "module",
+  "version": "0.1.0",
+  "files": [
+    "gamplo_wasm_bg.wasm",
+    "gamplo_wasm.js",
+    "gamplo_wasm.d.ts"
+  ],
+  "main": "gamplo_wasm.js",
+  "types": "gamplo_wasm.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}
