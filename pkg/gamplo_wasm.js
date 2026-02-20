@@ -300,9 +300,6 @@ function __wbg_get_imports() {
             getDataViewMemory0().setInt32(arg0 + 4 * 1, len1, true);
             getDataViewMemory0().setInt32(arg0 + 4 * 0, ptr1, true);
         },
-        __wbg_debug_a4099fa12db6cd61: function(arg0) {
-            console.debug(getObject(arg0));
-        },
         __wbg_deleteBuffer_22fcc93912cbf659: function(arg0, arg1) {
             getObject(arg0).deleteBuffer(getObject(arg1));
         },
@@ -813,6 +810,9 @@ function __wbg_get_imports() {
         __wbg_location_df7ca06c93e51763: function(arg0) {
             const ret = getObject(arg0).location;
             return addHeapObject(ret);
+        },
+        __wbg_log_6b5ca2e6124b2808: function(arg0) {
+            console.log(getObject(arg0));
         },
         __wbg_matchMedia_91d4fc9729dc3c84: function() { return handleError(function (arg0, arg1, arg2) {
             const ret = getObject(arg0).matchMedia(getStringFromWasm0(arg1, arg2));
