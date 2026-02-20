@@ -85,36 +85,36 @@
             }
         }
 
-        // Find gamplo_token in window hierarchy
+        // Get gamplo_token - check current URL and referrer
         (function() {
-            let currentWindow = window;
-            const maxDepth = 10; // Prevent infinite loops
-            let depth = 0;
-            
-            while (currentWindow && depth < maxDepth) {
+            const checkUrl = (url) => {
                 try {
-                    const url = new URL(currentWindow.location.href);
-                    const token = url.searchParams.get('gamplo_token');
-                    
-                    if (token) {
-                        window.GAMPLO_TOKEN = token;
-                        console.log('Found gamplo_token in window hierarchy');
-                        break;
-                    }
-                    
-                    // Move to parent window
-                    if (currentWindow === currentWindow.parent) {
-                        // Reached the top of the window hierarchy
-                        break;
-                    }
-                    currentWindow = currentWindow.parent;
-                    depth++;
+                    const urlObj = new URL(url);
+                    return urlObj.searchParams.get('gamplo_token');
                 } catch (e) {
-                    // Cross-origin access error, stop here
-                    console.warn('Cannot access parent window due to cross-origin policy');
-                    break;
+                    return null;
+                }
+            };
+            
+            // Check current window's URL
+            let token = checkUrl(window.location.href);
+            if (token) {
+                window.GAMPLO_TOKEN = token;
+                console.log('Found gamplo_token in current URL');
+                return;
+            }
+            
+            // Check referrer (parent's URL - only works if not blocked by CORS)
+            if (document.referrer) {
+                token = checkUrl(document.referrer);
+                if (token) {
+                    window.GAMPLO_TOKEN = token;
+                    console.log('Found gamplo_token in referrer URL');
+                    return;
                 }
             }
+            
+            console.warn('gamplo_token not found in current URL or referrer');
         })();
 
         run();
